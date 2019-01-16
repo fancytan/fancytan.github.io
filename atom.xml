@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Fancy</title>
+  
+  <subtitle>一只被代码耽误的设计师</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="www.fancytan77.work/"/>
+  <updated>2019-01-16T06:41:12.468Z</updated>
+  <id>www.fancytan77.work/</id>
+  
+  <author>
+    <name>fancy tan77</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring中bean的作用域</title>
+    <link href="www.fancytan77.work/2019/01/16/%E5%85%B3%E4%BA%8ESpring%E4%B8%ADbean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
+    <id>www.fancytan77.work/2019/01/16/关于Spring中bean的作用域问题/</id>
+    <published>2019-01-16T06:40:00.000Z</published>
+    <updated>2019-01-16T06:41:12.468Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;# &lt;/p&gt;
+&lt;h2 id=&quot;一、bean的四种作用域&quot;&gt;&lt;a href=&quot;#一、bean的四种作用域&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="HelloWorld" scheme="www.fancytan77.work/categories/HelloWorld/"/>
+    
+    
+      <category term="spring" scheme="www.fancytan77.work/tags/spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>typora-vue-theme Theme introduction</title>
+    <link href="www.fancytan77.work/2018/09/07/hello-world/"/>
+    <id>www.fancytan77.work/2018/09/07/hello-world/</id>
+    <published>2018-09-07T01:25:00.000Z</published>
+    <updated>2019-01-16T06:36:20.337Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="HelloWorld" scheme="www.fancytan77.work/categories/HelloWorld/"/>
+    
+    
+      <category term="java" scheme="www.fancytan77.work/tags/java/"/>
+    
+      <category term="spring" scheme="www.fancytan77.work/tags/spring/"/>
+    
+  </entry>
+  
+</feed>
