@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2019/01/19/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+      <url>/2019/01/19/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
+      
+        <content type="html"><![CDATA[<h3 id="单例设计模式"><a href="#单例设计模式" class="headerlink" title="单例设计模式"></a>单例设计模式</h3><h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><p>:一个类只能创建一个对象</p><ol><li>私有化构造器</li><li>在类的内部创建一个类的实例,且为static</li><li>私有化对象,通过公共方法调用</li><li>此公共方法只能通过类来调用,因为设置的是static,同时类的实例也是static</li></ol><p>饿汉先创建好:</p><pre><code>    package bank;    public class TestSingleton {        public static void main (String[] args){                Singleton s1 = Singleton.getInstance();                Singleton s2 = Singleton.getInstance();                System.out.println(s1 == s2); //true        }    }    class Singleton{        //1.私有化构造器        private Singleton(){        }        //2.在类中创建一个类的实例,私有化,静态的        private static Singleton instance = new Singleton();        // 3.通过公共方法调用,此公共方法只能类调用,因为设置了 static        public static Singleton getInstance(){            return instance;        }    }</code></pre><h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><ol><li>私有化构造器</li><li>创建一个私有的实例static 先不实例化 为 null</li><li><p>通过公共方法调用 static 在方法里面进行判断,if = null<br>实例化 !=null 直接return</p><pre><code>class Singleton{        //1.私有化构造器        private Singleton(){}        //2.创建一个私有的实例为static 且值设置为null    private static Singleton instance = null;        //3.通过公共方法调用,static    public static Singleton getInstance(){        if (instance == null){            instance = new Singleton();        }        return instance;    }}</code></pre></li></ol><p>懒汉式:用的时候创建</p><p>懒汉式:可能出现线程安全问题,</p><pre><code>public class SingleDemo {    private static SingleDemo s = null;    private SingleDemo(){}    public static  SingleDemo getInstance(){        /*如果第一个线程获取到了单例的实例对象，         * 后面的线程再获取实例的时候不需要进入同步代码块中了*/        if(s == null){            //同步代码块用的锁是单例的字节码文件对象，且只能用这个锁            synchronized(SingleDemo.class){                if(s == null){                    s = new SingleDemo();                }            }        }        return s;    }}</code></pre>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Spring中bean的作用域</title>
       <link href="/2019/01/16/%E5%85%B3%E4%BA%8ESpring%E4%B8%ADbean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
       <url>/2019/01/16/%E5%85%B3%E4%BA%8ESpring%E4%B8%ADbean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>

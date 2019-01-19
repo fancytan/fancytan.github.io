@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="www.fancytan77.work/"/>
-  <updated>2019-01-16T06:41:12.468Z</updated>
+  <updated>2018-10-26T16:57:24.000Z</updated>
   <id>www.fancytan77.work/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="www.fancytan77.work/2019/01/19/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>www.fancytan77.work/2019/01/19/单例模式/</id>
+    <published>2019-01-19T00:36:14.337Z</published>
+    <updated>2018-10-26T16:57:24.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;单例设计模式&quot;&gt;&lt;a href=&quot;#单例设计模式&quot; class=&quot;headerlink&quot; title=&quot;单例设计模式&quot;&gt;&lt;/a&gt;单例设计模式&lt;/h3&gt;&lt;h4 id=&quot;饿汉式&quot;&gt;&lt;a href=&quot;#饿汉式&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Spring中bean的作用域</title>
