@@ -5,11 +5,15 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Spring中bean的作用域, Fancy">
-    <meta name="description" content="# 
-一、bean的四种作用域Spring定义了多种作用域，可以基于这些作用域创建bean，包括:
-单例（Singleton）：在整个应用中，只创建bean的一个实例。
-原型（Prototype）：每次注入或者通过Spring应用上下文获取">
+    <meta name="keywords" content="Fancy">
+    <meta name="description" content="Linux 入门学习（第二回合）2018年12月18日  周二  晴
+今日学习要点：
+[TOC]
+Linux后半程一、Linux系统配置1.主机名配置：
+vim  /etc/sysconfig/network
+
+
+配置完成之后需要重启机器才">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +21,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Spring中bean的作用域 | Fancy</title>
+    <title>Fancy</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -279,13 +283,13 @@
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Spring中bean的作用域
+                        
                     </div>
                 </div>
             </div>
@@ -303,29 +307,11 @@
     <div class="card">
         <div class="card-content article-info">
             
-            <div class="article-tag">
-                
-                <a href="/tags/spring/" target="_blank">
-                    <span class="chip bg-color">spring</span>
-                </a>
-                
-            </div>
-            
             <div class="post-info">
-                
-                <span class="post-cate">
-                <!--<span class="post-cate" style="margin-right: 0px">-->
-                    <i class="fa fa-bookmark fa-fw icon-category"></i>
-                    
-                    <a href="/categories/HelloWorld/" class="post-category" target="_blank">
-                        HelloWorld
-                    </a>
-                    
-                </span>
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2019-01-16
+                    <i class="fa fa-clock-o fa-fw"></i>2019-01-28
                 </span>
 				
 				
@@ -337,46 +323,245 @@
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p># </p>
-<h2 id="一、bean的四种作用域"><a href="#一、bean的四种作用域" class="headerlink" title="一、bean的四种作用域"></a>一、bean的四种作用域</h2><p>Spring定义了多种作用域，可以基于这些作用域创建bean，包括:</p>
-<pre><code>单例（Singleton）：在整个应用中，只创建bean的一个实例。
-原型（Prototype）：每次注入或者通过Spring应用上下文获取的时候，都会创建一个新的bean实例。
-会话（Session）：在Web应用中，为每个会话创建一个bean实例。
-请求（Rquest）：在Web应用中，为每个请求创建一个bean实例 
-</code></pre><p>在默认情况下， Spring应用上下文中所有bean都是作为以单例（singleton）的形式创建的。也就是说，不管给定的一个bean被注入到其他bean多少次，每次所注入的都是同一个实例。在大多数情况下，单例bean是很理想的方案。但是在某些情况下，你所使用的类是易变的（mutable），它们会保持一些状态，因此重用是不安全的。在这种情况下，将class声明为单例的bean就不是什么好主意了。</p>
-<h2 id="二、使用其他作用域的bean"><a href="#二、使用其他作用域的bean" class="headerlink" title="二、使用其他作用域的bean"></a>二、使用其他作用域的bean</h2><p>要声明bean为其他作用域，可以使用@Scope注解，以下是用过@Scope注解和@Component注解一起使用，声明了一个原型作用域的bean：</p>
-<pre><code>@Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Notepad{...}
-</code></pre><p>这里，使用ConfigurableBeanFactory类的<code>SCOPE_PROTOTYPE</code>常量设置了原型作用域。你当然也可以使用@Scope(“prototype”)，但是使用<code>SCOPE_PROTOTYPE</code>常量更加安全并且不易出错。</p>
-<p>同样，@Scope注解也可以和@Bean注解一起使用:</p>
-<pre><code>@Bean
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public Notepad notepad(){
-    return new Notepad();
-}
-</code></pre><p>同样，可以使用scope属性通过XML的方式配置其他作用域的bean:</p>
-<pre><code>&lt;bean id=&quot;notepad&quot; class=&quot;com.carleviets.Notepad&quot; scope=&quot;prototype&quot;/&gt;
-</code></pre><h2 id="三、使用会话和请求作用域"><a href="#三、使用会话和请求作用域" class="headerlink" title="三、使用会话和请求作用域"></a>三、使用会话和请求作用域</h2><p>在典型的电子商务应用中，可能会有一个bean代表用户的购物车。如果购物车是单例的话，那么将会导致所有的用户都会向同一个购物车中添加商品。另一方面，如果购物车是原型作用域的，那么在应用中某一个地方往购物车中添加商品，在应用的另外一个地方可能就不可用了。就购物车bean来说，会话作用域是最为合适的，因为它与给定的用户关联性最大。</p>
-<pre><code>@Component
-@Scope(value=WebApplicationContext.SCOPE_SESSION, proxyMode=ScopedProxyMode.INTERFACES)
-public class ShoppingCart{...}
-</code></pre><p>注意,@Scope同时还有一个proxyMode属性，它被设置成了ScopedProxyMode.INTERFACES。这个属性解决了将会话或请求作用域的bean注入到单例bean中所遇到的问题。例如，如下的StoreService bean表示在线商店提供的服务:</p>
-<pre><code>@Component
-public class StoreService{
-    private ShoppingCart shoppingCart;
-
-    @Autowired
-    public void setShoppingCart(ShoppingCart shoppingCart){
-        this.shoppingCart=shoppingCart;
-    }
-    ...
-}
-</code></pre><p>因为StoreService是一个单例的bean，会在Spring应用上下文加载的时候创建。当它创建的时候， Spring会试图将ShoppingCart bean注入到setShoppingCart()方法中。但是ShoppingCart bean是会话作用域的，此时并不存在。直到某个用户进入系统，创建了会话之后，才会出现ShoppingCart实例。</p>
-<p>如果使用了proxyMode=ScopedProxyMode.INTERFACES的话，Spring并不会将实际的ShoppingCart bean注入到StoreService中，而是会注入一个到ShoppingCart bean的代理，如图所示。这个代理会暴露与ShoppingCart相同的方法，所以StoreService会认为它就是一个购物车。但是，当StoreService调用ShoppingCart的方法时，代理会对其进行懒解析并将调用委托给会话作用域内真正的ShoppingCart bean。</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1fz6igknkjlj30r00dy78f.jpg" alt="avatar"></p>
-<p>这是使用的是Spring基于接口的代理，但如果ShoppingCart是一个具体的类的话，Spring就没有办法创建基于接口的代理了。此时，它必须使用CGLib来生成基于类的代理。所以，如果bean类型是具体类的话，我们必须要将proxyMode属性设置为ScopedProxyMode.TARGET_CLASS，以此来表明要以生成目标类扩展的方式创建代理。</p>
-<p>尽管这里主要关注了会话作用域，但是请求作用域的bean会面临相同的装配问题。因此，请求作用域的bean应该也以作用域代理的方式进行注入。</p>
+                <h1 id="Linux-入门学习（第二回合）"><a href="#Linux-入门学习（第二回合）" class="headerlink" title="Linux 入门学习（第二回合）"></a>Linux 入门学习（第二回合）</h1><p><code>2018年12月18日  周二  晴</code></p>
+<p><strong>今日学习要点：</strong></p>
+<p>[TOC]</p>
+<h2 id="Linux后半程"><a href="#Linux后半程" class="headerlink" title="Linux后半程"></a>Linux后半程</h2><h3 id="一、Linux系统配置"><a href="#一、Linux系统配置" class="headerlink" title="一、Linux系统配置"></a>一、Linux系统配置</h3><h4 id="1-主机名配置："><a href="#1-主机名配置：" class="headerlink" title="1.主机名配置："></a>1.主机名配置：</h4><blockquote>
+<p>vim  /etc/sysconfig/network</p>
+</blockquote>
+<p><img src="C:\Users\ADMINI~1\AppData\Local\Temp\1545214876278.png" alt="1545214876278"></p>
+<p>配置完成之后需要重启机器才能生效</p>
+<blockquote>
+<p>reboot</p>
+</blockquote>
+<h4 id="2-DNS配置"><a href="#2-DNS配置" class="headerlink" title="2.DNS配置"></a>2.DNS配置</h4><blockquote>
+<h1 id="查看DNS服务器的地址"><a href="#查看DNS服务器的地址" class="headerlink" title="查看DNS服务器的地址"></a>查看DNS服务器的地址</h1><p>cat  /etc/resolv.conf</p>
+<h1 id="修改DNS服务器地址"><a href="#修改DNS服务器地址" class="headerlink" title="修改DNS服务器地址"></a>修改DNS服务器地址</h1><p>方式一：vim  /etc/sysconfig/network.scripts/ifconfig-eth0</p>
+<p>​             在配置网关时，配置DNS1=114.114.114.114（不推荐，江苏南京的IP）</p>
+<p>方式二：vim   /etc/resolv.conf    （用本地网关解析）</p>
+<p>​              nameserver   192.168.198.0   ( 此为虚拟机中的网关地址)</p>
+</blockquote>
+<h4 id="3-环境变量"><a href="#3-环境变量" class="headerlink" title="3.环境变量"></a>3.环境变量</h4><blockquote>
+<p>配置系统环境变量，使得某些命令在执行时，系统可以找到命令对应的执行程序，命令才能正常执行。</p>
+</blockquote>
+<p>查看系统一共在哪些目录里寻找命令对应的程序</p>
+<blockquote>
+<p>命令：echo $PATH</p>
+</blockquote>
+<p><img src="C:\Users\ADMINI~1\AppData\Local\Temp\1545215894631.png" alt="1545215894631"></p>
+<p><code>注意</code>：路径之间有冒号隔开，系统会从左往右依次寻找对应的程序</p>
+<p>​             一般命令会存放在  bin目录，或sbin目录</p>
+<p>配置全局环境变量：</p>
+<blockquote>
+<p>vim  /etc/profile</p>
+<p>在文件中：</p>
+<p>PATH=$PATH:(命令所在目录)</p>
+<p>退出文件编辑后：</p>
+<p>source  /etc/profile  </p>
+<p> (重新加载资源，有的可能需要重启机器，这不适用于实际状况)</p>
+</blockquote>
+<p>配置局部环境变量：（推荐，限当前登录用户使用）</p>
+<blockquote>
+<p>查看所有文件(root目录下)</p>
+<p>ls  -a    (发现隐藏文件    .bash.profile)</p>
+<p>vim  ~/ bash_profile</p>
+<p>在文件中：</p>
+<p>export  PATH =$PATH:(命令所在目录)</p>
+</blockquote>
+<h4 id="4-拍快照"><a href="#4-拍快照" class="headerlink" title="4.拍快照"></a>4.拍快照</h4><p>（保存当时计算机所出状态的各种配置和资源，适度使用）</p>
+<blockquote>
+<p>选中指定虚拟计算机——鼠标右击—–选中“快照” ——“拍摄快照‘—-在页面中找到”拍摄快照“，并添加名称和描述</p>
+<p>也可以删除，找到页面中的删除按钮</p>
+</blockquote>
+<h3 id="二、服务操作"><a href="#二、服务操作" class="headerlink" title="二、服务操作"></a>二、服务操作</h3><h4 id="1、查询操作系统"><a href="#1、查询操作系统" class="headerlink" title="1、查询操作系统"></a>1、查询操作系统</h4><p>在每一个执行等级中会执行哪些系统服务，其中包括各类常驻服务。</p>
+<blockquote>
+<p>命令：chkconfig</p>
+</blockquote>
+<p><img src="C:\Users\ADMINI~1\AppData\Local\Temp\1545219619458.png" alt="1545219619458"></p>
+<pre class=" language-txt"><code class="language-txt">各数字代表的系统初始化级别：
+    0：停机状态
+　　1：单用户模式，root账户进行操作
+　　2：多用户，不能使用net file system，一般很少用
+　　3：完全多用户，一部分启动，一部分不启动，命令行界面
+　　4：未使用、未定义的保留模式
+　　5：图形化，3级别中启动的进程都启动，并且会启动一部分图形界面进程。
+　　6：停止所有进程，卸载文件系统，重新启动(reboot)
+</code></pre>
+<blockquote>
+<p>1、2、4很少用，0、3、5、6常用，3级别和5级别除了桌面相关的进程外没有什么区别，推荐都用3级别；</p>
+<p>linux默认级别为3；</p>
+<p>不要把 /etc/inittab  中 initdefault 设置为0 和 6； </p>
+</blockquote>
+<h4 id="2、服务操作"><a href="#2、服务操作" class="headerlink" title="2、服务操作"></a>2、服务操作</h4><blockquote>
+<p>service 服务名 start/stop/status/restart</p>
+</blockquote>
+<p>举例：对防火墙服务进行操作</p>
+<blockquote>
+<p>防火墙的服务名为：iptables</p>
+</blockquote>
+<p>查看防火墙服务运行状态</p>
+<blockquote>
+<p>service  iptables status</p>
+</blockquote>
+<p>关闭防火墙</p>
+<blockquote>
+<p>service  iptables stop</p>
+</blockquote>
+<p>开启防火墙</p>
+<blockquote>
+<p>service  iptables start</p>
+</blockquote>
+<p>永久开启/关闭防火墙</p>
+<blockquote>
+<p>chkconfig iptables on/off</p>
+</blockquote>
+<h4 id="3、服务初执行等级更改"><a href="#3、服务初执行等级更改" class="headerlink" title="3、服务初执行等级更改"></a>3、服务初执行等级更改</h4><blockquote>
+<p>chkconfig –level 2345 <code>name</code> off|on<br>                                   （ <code>服务名</code>）</p>
+<p>举例：防火墙</p>
+<p>chkconfig –level 2345 iptables   off</p>
+</blockquote>
+<p>若不加级别，默认是2345级别</p>
+<blockquote>
+<p>命令：chkconfig <code>name</code> on|off<br>                         （<code>服务名</code>）</p>
+</blockquote>
+<h3 id="三、linux进程操作"><a href="#三、linux进程操作" class="headerlink" title="三、linux进程操作"></a>三、linux进程操作</h3><h4 id="1、查看所有进程"><a href="#1、查看所有进程" class="headerlink" title="1、查看所有进程"></a>1、查看所有进程</h4><blockquote>
+<p>命令： ps  -aux</p>
+</blockquote>
+<pre class=" language-txt"><code class="language-txt">    -a 列出所有
+    -u 列出用户
+    -x 详细列出，如cpu、内存等
+     -e select all processes    相当于-a
+     -f does full-format listing   将所有格式详细列出来      
+</code></pre>
+<p>查看所有进程里CMD是ssh 的进程信息（包括pid 进程号）</p>
+<blockquote>
+<p>命令： ps  - ef | grep ssh      </p>
+<p>（|  管道符  ：前一个输出，变为后一个的输入）</p>
+<p>举例：</p>
+<p>ps -ef | grep redis</p>
+</blockquote>
+<h4 id="2、杀死进程"><a href="#2、杀死进程" class="headerlink" title="2、杀死进程"></a>2、杀死进程</h4><p><code>kill</code></p>
+<blockquote>
+<p>命令：kill pid </p>
+<p>-9    强制杀死</p>
+<p>用法：用ps 命令先查出对应程序的PID或PPID ，然后用kill杀死掉进程。</p>
+</blockquote>
+<h3 id="四、其他常用命令"><a href="#四、其他常用命令" class="headerlink" title="四、其他常用命令"></a>四、其他常用命令</h3><h4 id="1、yum"><a href="#1、yum" class="headerlink" title="1、yum"></a>1、<strong>yum</strong></h4><table>
+<thead>
+<tr>
+<th>基于<a href="https://baike.baidu.com/item/RPM" target="_blank" rel="noopener">RPM</a>包管理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装</td>
+</tr>
+</tbody>
+</table>
+<p>跟换yum下载源（默认是到国外网站下载）</p>
+<p>第一步：备份你的原镜像文件，以免出错后可以恢复</p>
+<blockquote>
+<p>cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</p>
+</blockquote>
+<p>第二步：下载新的CentOS-Base.rep到/etc/yum.repos.d/</p>
+<blockquote>
+<p>wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-6.repo" target="_blank" rel="noopener">http://mirrors.aliyun.com/repo/Centos-6.repo</a></p>
+</blockquote>
+<p>下载完之后，查看一下文件内容</p>
+<blockquote>
+<p>vim  /etc/yum.repos.d/CentOS-Base.repo</p>
+</blockquote>
+<p>第三步：生成缓存</p>
+<blockquote>
+<p>运行yum makecache</p>
+</blockquote>
+<p>查看当前源</p>
+<blockquote>
+<p>yum list | head -50</p>
+</blockquote>
+<h4 id="2、-wget"><a href="#2、-wget" class="headerlink" title="2、 wget"></a>2、 <strong>wget</strong></h4><table>
+<thead>
+<tr>
+<th>一个从网络上自动下载文件的自由工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>支持通过 HTTP、HTTPS、FTP 三个最常见的 TCP/IP协议，可以使用 HTTP 代理</td>
+</tr>
+</tbody>
+</table>
+<p>安装：</p>
+<blockquote>
+<p>yum install wget  –y</p>
+</blockquote>
+<p>用法：</p>
+<blockquote>
+<p>wget  [option] 网址  -O    指定下载保存的路径</p>
+<p>举例：</p>
+<p>wget  <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>  -O baidu.html</p>
+</blockquote>
+<h4 id="3、tar"><a href="#3、tar" class="headerlink" title="3、tar"></a>3、<strong>tar</strong></h4><pre class=" language-txt"><code class="language-txt">    -z    gzip进行解压或压缩，带.gz需要加，压缩出来.gz也需要加
+    -x    解压
+    -c    压缩
+    -f    目标文件，压缩文件新命名或解压文件名
+    -v    解压缩过程信息打印
+</code></pre>
+<blockquote>
+<p>解压命令：tar  -zvxf  xxxx.tar.gz</p>
+</blockquote>
+<blockquote>
+<p>压缩命令：tar -zcf 压缩包命名 压缩目标<br>举例：</p>
+<p>tar -zcf  tomcat.tar.gz  apache-tomcat-7.0.61<br>将 apache-tomcat-7.0.61 目录压缩成tomcat.tar.gz包</p>
+</blockquote>
+<h4 id="4、man"><a href="#4、man" class="headerlink" title="4、man"></a>4、<strong>man</strong></h4><p>作用：用于查看指定命令的具体解释</p>
+<p>安装</p>
+<blockquote>
+<p>yum install  man  -y</p>
+<p>(下载并安装man  并确认)</p>
+</blockquote>
+<p>使用</p>
+<blockquote>
+<p>man  ps</p>
+</blockquote>
+<h3 id="五、JDK部署"><a href="#五、JDK部署" class="headerlink" title="五、JDK部署"></a>五、JDK部署</h3><h4 id="1、准备JDK安装包："><a href="#1、准备JDK安装包：" class="headerlink" title="1、准备JDK安装包："></a>1、准备JDK安装包：</h4><p>（这是使用   .rpm  格式的安装包）</p>
+<p>官网下载：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+<p>云盘资源：  <a href="https://pan.baidu.com/s/1LzeQbOnG9PROZrtlbYHlDg" target="_blank" rel="noopener">jdk-8u191-linux-x64.rpm</a>  ：</p>
+<p>​     根据用户喜好放到虚拟机器的文件目录中</p>
+<h4 id="2、解压并安装，展示编译过程"><a href="#2、解压并安装，展示编译过程" class="headerlink" title="2、解压并安装，展示编译过程"></a>2、解压并安装，展示编译过程</h4><blockquote>
+<p>rpm   -ivh  jdk-8u191-linux-x64.rpm</p>
+</blockquote>
+<p>安装放到了 /usr 目录下，有/java目录</p>
+<h4 id="3、配置环境变量"><a href="#3、配置环境变量" class="headerlink" title="3、配置环境变量"></a>3、配置环境变量</h4><blockquote>
+<p>vim  ~/.bash_profile</p>
+<p>在文件中：</p>
+<p>JAVA_HOME=(jdk文件所在的路径+jdk文件名)</p>
+<p>export  PATH=$PATH:$JAVA_HOME/bin</p>
+</blockquote>
+<p>注意：</p>
+<p>新的path路径必须要包含旧的PATH路径，且每个路径之间以冒号隔开，而不是分号</p>
+<blockquote>
+<p>配置完成，退出编辑框后</p>
+<p>source  ~/.hash_profile</p>
+</blockquote>
+<h4 id="4、测试："><a href="#4、测试：" class="headerlink" title="4、测试："></a>4、测试：</h4><blockquote>
+<p>java  -version</p>
+<p>或</p>
+<p>echo  $JAVA_HOME</p>
+</blockquote>
+<p><code>echo   标准输出，打印</code></p>
+<h3 id="六、Tomcat部署"><a href="#六、Tomcat部署" class="headerlink" title="六、Tomcat部署"></a>六、Tomcat部署</h3><h4 id="1、官网下载"><a href="#1、官网下载" class="headerlink" title="1、官网下载"></a>1、官网下载</h4><p><a href="http://tomcat.apache.org/" target="_blank" rel="noopener">http://tomcat.apache.org/</a></p>
+<p>云盘资源：<a href="https://pan.baidu.com/s/1e7OSIf3K9YpFCzXncMj_9Q" target="_blank" rel="noopener">apache-tomcat-7.0.61.tar</a></p>
+<h4 id="2、上传并解压"><a href="#2、上传并解压" class="headerlink" title="2、上传并解压"></a>2、上传并解压</h4><blockquote>
+<p>tar -zvxf  apache-tomcat-7.0.61.tar</p>
+</blockquote>
+<h4 id="3、启动tomcat"><a href="#3、启动tomcat" class="headerlink" title="3、启动tomcat"></a>3、启动tomcat</h4><p>在tomcat的bin目录下有个startup.sh 脚本可以直接启动tomcat服务</p>
+<blockquote>
+<p>./startup.sh</p>
+</blockquote>
+<h4 id="4、关闭tomcat服务"><a href="#4、关闭tomcat服务" class="headerlink" title="4、关闭tomcat服务"></a>4、关闭tomcat服务</h4><p>方式一：可以用shutdown.sh命令</p>
+<p>方式二：ps -ef | grep tomcat 查看出tomcat进程号后，用kill命令</p>
+<h4 id="5、验证"><a href="#5、验证" class="headerlink" title="5、验证"></a>5、验证</h4><p>先把防火墙关了（service iptables stop），然后访问虚拟机IP的8080端口</p>
 
             </div>
             <hr>
@@ -515,7 +700,7 @@ public class StoreService{
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="www.fancytan77.work" class="b-link-green">Fancy</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/01/16/关于Spring中bean的作用域问题/" class="b-link-green">Spring中bean的作用域</a>
+                    <a href="/2019/01/28/Linux 入门学习（第二回合）/" class="b-link-green"></a>
                 </p>
             </div>
         </div>
@@ -537,7 +722,7 @@ public class StoreService{
         repo: '',
         owner: '',
         admin: null,
-        id: '2019-01-16T14-40-00',
+        id: '2019-01-28T19-20-33',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -556,7 +741,7 @@ public class StoreService{
 <script src="/libs/gitment/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-    id: 'Wed Jan 16 2019 14:40:00 GMT+0800',
+    id: 'Mon Jan 28 2019 19:20:33 GMT+0800',
     owner: '',
     repo: '',
     oauth: {
@@ -580,9 +765,9 @@ gitment.render('gitment-content');
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'www.fancytan77.work/2019/01/16/关于Spring中bean的作用域问题/';
-        this.page.identifier = '/2019/01/16/关于Spring中bean的作用域问题/';
-        this.page.title = 'Spring中bean的作用域';
+        this.page.url = 'www.fancytan77.work/2019/01/28/Linux 入门学习（第二回合）/';
+        this.page.identifier = '/2019/01/28/Linux 入门学习（第二回合）/';
+        this.page.title = '';
     };
     let disqus_shortname = '';
 
@@ -889,6 +1074,42 @@ gitment.render('gitment-content');
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
+                <a href="/2019/01/28/Nginx入门学习（第一回合）/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">Nginx入门学习（第一回合）[^开发者]:  由俄罗斯的程序设计师Igor Sysoev所开发
+[TOC]
+一、产生背景1.巨大流量—海量的并发访问
+2.单台服务器资源和能力有限
+引发服务器宕机而无法提供服务
+二、负载均衡(Load Ba</div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            fancy tan77
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">下一篇</div>
+            <div class="card">
                 <a href="/2019/01/25/单例模式/">
                     <div class="card-image">
                         
@@ -909,51 +1130,8 @@ gitment.render('gitment-content');
 
 饿汉先创建好</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-25
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/HelloWorld/" class="post-category" target="_blank">
-                                    HelloWorld
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/spring/" target="_blank">
-                        <span class="chip bg-color">spring</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">下一篇</div>
-            <div class="card">
-                <a href="/2018/09/07/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/30.jpg" class="responsive-img" alt="typora-vue-theme Theme introduction">
-                        
-                        <span class="card-title">typora-vue-theme Theme introduction</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex</div>
-                    <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-09-07
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-25
                             </span>
                         <span class="publish-author">
                             
@@ -969,10 +1147,6 @@ gitment.render('gitment-content');
                 </div>
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/java/" target="_blank">
-                        <span class="chip bg-color">java</span>
-                    </a>
                     
                     <a href="/tags/spring/" target="_blank">
                         <span class="chip bg-color">spring</span>

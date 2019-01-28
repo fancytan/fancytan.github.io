@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="www.fancytan77.work/"/>
-  <updated>2018-10-26T16:57:24.000Z</updated>
+  <updated>2018-12-19T18:18:55.242Z</updated>
   <id>www.fancytan77.work/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title></title>
-    <link href="www.fancytan77.work/2019/01/19/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
-    <id>www.fancytan77.work/2019/01/19/单例模式/</id>
-    <published>2019-01-19T00:36:14.337Z</published>
-    <updated>2018-10-26T16:57:24.000Z</updated>
+    <link href="www.fancytan77.work/2019/01/28/Nginx%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E7%AC%AC%E4%B8%80%E5%9B%9E%E5%90%88%EF%BC%89/"/>
+    <id>www.fancytan77.work/2019/01/28/Nginx入门学习（第一回合）/</id>
+    <published>2019-01-28T11:20:33.628Z</published>
+    <updated>2018-12-19T18:18:55.242Z</updated>
     
     <summary type="html">
     
@@ -29,12 +29,61 @@
       
         
         
-          &lt;h3 id=&quot;单例设计模式&quot;&gt;&lt;a href=&quot;#单例设计模式&quot; class=&quot;headerlink&quot; title=&quot;单例设计模式&quot;&gt;&lt;/a&gt;单例设计模式&lt;/h3&gt;&lt;h4 id=&quot;饿汉式&quot;&gt;&lt;a href=&quot;#饿汉式&quot; class=&quot;headerlink&quot;
+          &lt;h1 id=&quot;Nginx入门学习（第一回合）&quot;&gt;&lt;a href=&quot;#Nginx入门学习（第一回合）&quot; class=&quot;headerlink&quot; title=&quot;Nginx入门学习（第一回合）&quot;&gt;&lt;/a&gt;Nginx入门学习（第一回合）&lt;/h1&gt;&lt;p&gt;[^开发者]: 
         
       
     
     </summary>
     
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="www.fancytan77.work/2019/01/28/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%9B%9E%E5%90%88%EF%BC%89/"/>
+    <id>www.fancytan77.work/2019/01/28/Linux 入门学习（第二回合）/</id>
+    <published>2019-01-28T11:20:33.625Z</published>
+    <updated>2018-12-19T12:37:06.490Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Linux-入门学习（第二回合）&quot;&gt;&lt;a href=&quot;#Linux-入门学习（第二回合）&quot; class=&quot;headerlink&quot; title=&quot;Linux 入门学习（第二回合）&quot;&gt;&lt;/a&gt;Linux
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>单例设计模式</title>
+    <link href="www.fancytan77.work/2019/01/25/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>www.fancytan77.work/2019/01/25/单例模式/</id>
+    <published>2019-01-25T03:40:00.000Z</published>
+    <updated>2019-01-25T03:12:54.172Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;# &lt;/p&gt;
+&lt;h3 id=&quot;单例设计模式&quot;&gt;&lt;a href=&quot;#单例设计模式&quot; class=&quot;headerlink&quot; title=&quot;单例设计模式&quot;&gt;&lt;/a&gt;单例设计模式&lt;/h3&gt;&lt;h4 id=&quot;饿汉式&quot;&gt;&lt;a href=&quot;#饿汉式&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="HelloWorld" scheme="www.fancytan77.work/categories/HelloWorld/"/>
+    
+    
+      <category term="spring" scheme="www.fancytan77.work/tags/spring/"/>
     
   </entry>
   

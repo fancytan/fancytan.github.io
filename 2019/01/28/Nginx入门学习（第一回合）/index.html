@@ -6,15 +6,12 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Fancy">
-    <meta name="description" content="单例设计模式饿汉式:一个类只能创建一个对象
-
-私有化构造器
-在类的内部创建一个类的实例,且为static
-私有化对象,通过公共方法调用
-此公共方法只能通过类来调用,因为设置的是static,同时类的实例也是static
-
-饿汉先创建好:
- ">
+    <meta name="description" content="Nginx入门学习（第一回合）[^开发者]:  由俄罗斯的程序设计师Igor Sysoev所开发
+[TOC]
+一、产生背景1.巨大流量—海量的并发访问
+2.单台服务器资源和能力有限
+引发服务器宕机而无法提供服务
+二、负载均衡(Load Ba">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -312,7 +309,7 @@
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2019-01-19
+                    <i class="fa fa-clock-o fa-fw"></i>2019-01-28
                 </span>
 				
 				
@@ -324,74 +321,323 @@
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="单例设计模式"><a href="#单例设计模式" class="headerlink" title="单例设计模式"></a>单例设计模式</h3><h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><p>:一个类只能创建一个对象</p>
-<ol>
-<li>私有化构造器</li>
-<li>在类的内部创建一个类的实例,且为static</li>
-<li>私有化对象,通过公共方法调用</li>
-<li>此公共方法只能通过类来调用,因为设置的是static,同时类的实例也是static</li>
-</ol>
-<p>饿汉先创建好:</p>
-<pre><code>    package bank;
+                <h1 id="Nginx入门学习（第一回合）"><a href="#Nginx入门学习（第一回合）" class="headerlink" title="Nginx入门学习（第一回合）"></a>Nginx入门学习（第一回合）</h1><p>[^开发者]:  由俄罗斯的程序设计师Igor Sysoev所开发</p>
+<p>[TOC]</p>
+<h2 id="一、产生背景"><a href="#一、产生背景" class="headerlink" title="一、产生背景"></a>一、产生背景</h2><p>1.巨大流量—海量的并发访问</p>
+<p>2.单台服务器资源和能力有限</p>
+<p>引发服务器宕机而无法提供服务</p>
+<h2 id="二、负载均衡-Load-Balance"><a href="#二、负载均衡-Load-Balance" class="headerlink" title="二、负载均衡(Load Balance)"></a>二、负载均衡(Load Balance)</h2><h3 id="1、高并发"><a href="#1、高并发" class="headerlink" title="1、高并发"></a>1、高并发</h3><p>（1）、高（大量的）</p>
+<p>（2）、并发就是可以使用多个线程或者多个进程，同时处理（就是并发）不同的操作</p>
+<p>（3）、简而言之就是每秒内有多少个请求同时访问。</p>
+<h3 id="2、负载均衡"><a href="#2、负载均衡" class="headerlink" title="2、负载均衡"></a>2、负载均衡</h3><p>（1）、将请求/数据【均匀】分摊到多个操作单元上执行</p>
+<p>（2）、关键在于【均匀】,也是分布式系统架构设计中必须考虑的因素之一。</p>
+<h3 id="3、互联网分布式架构"><a href="#3、互联网分布式架构" class="headerlink" title="3、互联网分布式架构"></a>3、互联网分布式架构</h3><p>常见，分为客户端层、反向代理nginx层、站点层、服务层、数据层。只需要实现“将请求/数据 均匀分摊到多个操作单元上执行”，就能实现负载均衡。</p>
+<h2 id="三、对Nginx的基本了解"><a href="#三、对Nginx的基本了解" class="headerlink" title="三、对Nginx的基本了解"></a>三、对Nginx的基本了解</h2><h3 id="1、什么是Nginx？"><a href="#1、什么是Nginx？" class="headerlink" title="1、什么是Nginx？"></a>1、什么是Nginx？</h3><pre class=" language-txt"><code class="language-txt">  一款轻量级的Web 服务器/反向代理服务器【后面有介绍】及电子邮件（IMAP/POP3）代理服务器。
+</code></pre>
+<p>​     <code>特点</code></p>
+<pre><code>  *是占有内存少，CPU、内存等资源消耗却非常低，
+  *运行非常稳定并发能力强，nginx的并发能力确实在同类型的网页服务器中表现非常好。
+</code></pre><h3 id="2、Nginx-VS-Apache"><a href="#2、Nginx-VS-Apache" class="headerlink" title="2、Nginx   VS   Apache"></a>2、Nginx   VS   Apache</h3><h1 id="（1）、nginx相对于apache的优点："><a href="#（1）、nginx相对于apache的优点：" class="headerlink" title="（1）、nginx相对于apache的优点："></a>（1）、nginx相对于apache的优点：</h1><pre class=" language-txt"><code class="language-txt">*轻量级，同样起web 服务，比apache 占用更少的内存及资源高并发，
+*nginx 处理请求是异步非阻塞（如前端ajax）的，而apache 则是阻塞型的，
+*在高并发下nginx能保持低资源低消耗高性能高度模块化的设计，编写模块相对简单
+*Nginx 配置简洁, Apache 复杂
+</code></pre>
+<h1 id="（2）、apache-相对于nginx-的优点："><a href="#（2）、apache-相对于nginx-的优点：" class="headerlink" title="（2）、apache 相对于nginx 的优点："></a>（2）、apache 相对于nginx 的优点：</h1><pre class=" language-txt"><code class="language-txt"> * Rewrite重写 ，比nginx 的rewrite 强大模块超多，
+ *基本想到的都可以找到少bug ，nginx 的bug 相对较多。（出身好起步高）
+</code></pre>
+<h2 id="四、安装Nginx"><a href="#四、安装Nginx" class="headerlink" title="四、安装Nginx"></a>四、安装Nginx</h2><p><code>这里以安装tengine为例</code></p>
+<h3 id="1、安装之前准备"><a href="#1、安装之前准备" class="headerlink" title="1、安装之前准备"></a>1、安装之前准备</h3><p>配置依赖 gcc openssl-devel pcre-devel zlib-devel</p>
+<p> 安装：</p>
+<blockquote>
+<p>yum install gcc openssl-devel pcre-devel zlib-devel -y</p>
+</blockquote>
+<h3 id="2、下载"><a href="#2、下载" class="headerlink" title="2、下载"></a>2、下载</h3><p>（目前最新版）：<a href="http://tengine.taobao.org/download.html" target="_blank" rel="noopener">tengine-2.2.3.tar</a></p>
+<h3 id="3、-解压缩"><a href="#3、-解压缩" class="headerlink" title="3、 解压缩"></a>3、 解压缩</h3><blockquote>
+<p>tar  -zvxf   tengine-2.2.3.tar </p>
+</blockquote>
+<h3 id="4、安装Nginx"><a href="#4、安装Nginx" class="headerlink" title="4、安装Nginx"></a>4、安装Nginx</h3><blockquote>
+<p>在Nginx解压的目录下运行：</p>
+<p>./configure</p>
+<p>make &amp;&amp; make install</p>
+</blockquote>
+<p>默认安装目录：<br>/usr/local/nginx</p>
+<h3 id="5、配置Nginx为系统服务，以方便管理"><a href="#5、配置Nginx为系统服务，以方便管理" class="headerlink" title="5、配置Nginx为系统服务，以方便管理"></a>5、配置Nginx为系统服务，以方便管理</h3><h4 id="（1）、在-etc-rc-d-init-d-目录中建立文本文件nginx"><a href="#（1）、在-etc-rc-d-init-d-目录中建立文本文件nginx" class="headerlink" title="（1）、在/etc/rc.d/init.d/目录中建立文本文件nginx"></a>（1）、在/etc/rc.d/init.d/目录中建立文本文件nginx</h4><h4 id="（2）、在文件中粘贴下面的内容："><a href="#（2）、在文件中粘贴下面的内容：" class="headerlink" title="（2）、在文件中粘贴下面的内容："></a>（2）、在文件中粘贴下面的内容：</h4><pre class=" language-txt"><code class="language-txt">#!/bin/sh
+#
+# nginx - this script starts and stops the nginx daemon
+#
+# chkconfig:   - 85 15 
+# description:  Nginx is an HTTP(S) server, HTTP(S) reverse \
+#               proxy and IMAP/POP3 proxy server
+# processname: nginx
+# config:      /etc/nginx/nginx.conf
+# config:      /etc/sysconfig/nginx
+# pidfile:     /var/run/nginx.pid
 
-    public class TestSingleton {
-        public static void main (String[] args){
-                Singleton s1 = Singleton.getInstance();
-                Singleton s2 = Singleton.getInstance();
-                System.out.println(s1 == s2); //true
+# Source function library.
+. /etc/rc.d/init.d/functions
 
-        }
-    }
+# Source networking configuration.
+. /etc/sysconfig/network
 
-    class Singleton{
-        //1.私有化构造器
-        private Singleton(){
-        }
-        //2.在类中创建一个类的实例,私有化,静态的
-        private static Singleton instance = new Singleton();
-        // 3.通过公共方法调用,此公共方法只能类调用,因为设置了 static
-        public static Singleton getInstance(){
-            return instance;
-        }
-    }
-</code></pre><h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><ol>
-<li>私有化构造器</li>
-<li>创建一个私有的实例static 先不实例化 为 null</li>
-<li><p>通过公共方法调用 static 在方法里面进行判断,if = null<br>实例化 !=null 直接return</p>
-<pre><code>class Singleton{
-        //1.私有化构造器
-        private Singleton(){}
-        //2.创建一个私有的实例为static 且值设置为null
-    private static Singleton instance = null;
-        //3.通过公共方法调用,static
-    public static Singleton getInstance(){
-        if (instance == null){
-            instance = new Singleton();
-        }
-        return instance;
-    }
+# Check that networking is up.
+[ "$NETWORKING" = "no" ] && exit 0
+
+nginx="/usr/local/nginx/sbin/nginx"
+prog=$(basename $nginx)
+
+NGINX_CONF_FILE="/usr/local/nginx/conf/nginx.conf"
+
+[ -f /etc/sysconfig/nginx ] && . /etc/sysconfig/nginx
+
+lockfile=/var/lock/subsys/nginx
+
+make_dirs() {
+   # make required directories
+   user=`nginx -V 2>&1 | grep "configure arguments:" | sed 's/[^*]*--user=\([^ ]*\).*/\1/g' -`
+   options=`$nginx -V 2>&1 | grep 'configure arguments:'`
+   for opt in $options; do
+       if [ `echo $opt | grep '.*-temp-path'` ]; then
+           value=`echo $opt | cut -d "=" -f 2`
+           if [ ! -d "$value" ]; then
+               # echo "creating" $value
+               mkdir -p $value && chown -R $user $value
+           fi
+       fi
+   done
 }
-</code></pre></li>
-</ol>
-<p>懒汉式:用的时候创建</p>
-<p>懒汉式:可能出现线程安全问题,</p>
-<pre><code>public class SingleDemo {
-    private static SingleDemo s = null;
-    private SingleDemo(){}
-    public static  SingleDemo getInstance(){
-        /*如果第一个线程获取到了单例的实例对象，
-         * 后面的线程再获取实例的时候不需要进入同步代码块中了*/
-        if(s == null){
-            //同步代码块用的锁是单例的字节码文件对象，且只能用这个锁
-            synchronized(SingleDemo.class){
-                if(s == null){
-                    s = new SingleDemo();
-                }
-            }
-        }
-        return s;
-    }
+
+start() {
+    [ -x $nginx ] || exit 5
+    [ -f $NGINX_CONF_FILE ] || exit 6
+    make_dirs
+    echo -n $"Starting $prog: "
+    daemon $nginx -c $NGINX_CONF_FILE
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
 }
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog -QUIT
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    configtest || return $?
+    stop
+    sleep 1
+    start
+}
+
+reload() {
+    configtest || return $?
+    echo -n $"Reloading $prog: "
+    killproc $nginx -HUP
+    RETVAL=$?
+    echo
+}
+
+force_reload() {
+    restart
+}
+
+configtest() {
+  $nginx -t -c $NGINX_CONF_FILE
+}
+
+rh_status() {
+    status $prog
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart|configtest)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+            ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}"
+        exit 2
+esac
+</code></pre>
+<h4 id="（3）、修改nginx文件的执行权限"><a href="#（3）、修改nginx文件的执行权限" class="headerlink" title="（3）、修改nginx文件的执行权限"></a>（3）、修改nginx文件的执行权限</h4><blockquote>
+<p>chmod +x nginx</p>
+</blockquote>
+<h4 id="（4）、添加该文件到系统服务中去"><a href="#（4）、添加该文件到系统服务中去" class="headerlink" title="（4）、添加该文件到系统服务中去"></a>（4）、添加该文件到系统服务中去</h4><blockquote>
+<p>chkconfig –add nginx</p>
+</blockquote>
+<p>查看是否添加成功</p>
+<blockquote>
+<p>chkconfig –list nginx</p>
+</blockquote>
+<p>启动，停止，重新装载</p>
+<blockquote>
+<p>service nginx start|stop</p>
+</blockquote>
+<h2 id="五、Nginx配置"><a href="#五、Nginx配置" class="headerlink" title="五、Nginx配置"></a>五、Nginx配置</h2><h3 id="1、查看配置"><a href="#1、查看配置" class="headerlink" title="1、查看配置"></a>1、查看配置</h3><blockquote>
+<p>cd   /usr/local/nginx/conf</p>
+<p>vim   nginx.conf</p>
+</blockquote>
+<h3 id="2、配置解析"><a href="#2、配置解析" class="headerlink" title="2、配置解析"></a>2、配置解析</h3><pre class=" language-txt"><code class="language-txt">#进程数，建议设置和CPU个数一样或2倍
+worker_processes  2;
+
+#日志级别
+error_log  logs/error.log  warning;(默认error级别)
+
+# nginx 启动后的pid 存放位置
+#pid        logs/nginx.pid;
+
+events {
+    #配置每个进程的连接数，总的连接数= worker_processes * worker_connections
+    #默认1024
+    worker_connections  10240;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+#连接超时时间，单位秒
+keepalive_timeout  65;
+    server {
+        listen       80;
+        server_name  localhost                 
+        #默认请求
+          location / {
+                     root  html;   #定义服务器的默认网站根目录位置
+                     index  index.php index.html index.htm;  #定义首页索引文件的名称
+        }
+        #定义错误提示页面
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+</code></pre>
+<h3 id="3、负载均衡配置"><a href="#3、负载均衡配置" class="headerlink" title="3、负载均衡配置"></a>3、负载均衡配置</h3><p>安装Tomcat，参考 <code>Tomcat配置</code></p>
+<h4 id="多负载均执行一下操作："><a href="#多负载均执行一下操作：" class="headerlink" title="多负载均执行一下操作："></a>多负载均执行一下操作：</h4><p> 多负载的情况下，打开指定虚拟机器</p>
+<blockquote>
+<p>open  node01    </p>
+<p>node01  为指定虚拟机器的别名，在hosts文件中配置的</p>
+</blockquote>
+<p>启动Tomcat</p>
+<blockquote>
+<p>在Tomcat解压的目录下       ./startup.sh  </p>
+</blockquote>
+<p>注意： 记得关闭虚拟机器的防火墙</p>
+<blockquote>
+<p>service  iptables  stop</p>
+</blockquote>
+<p>浏览器访问</p>
+<blockquote>
+<p>虚拟机器IP地址：8080</p>
+</blockquote>
+<p>默认负载均衡配置</p>
+<blockquote>
+<pre><code>http { 
+    upstream shsxt{   
+    # 以下均为实际执行服务的服务器
+    #只有当hosts文件中给ip地址配置了别名，这里server后面才能用别名，
+    #否则跟IP地址
+        server node01; 
+        server node02; 
+        server node03; 
+    } 
+
+    server { 
+    #指定访问端口为80 ，那么Tomcat服务器端的port也要改为80
+        listen 80;   
+        server_name  localhost;
+        location / {
+            proxy_pass http://shsxt;    
+            # shsxt  是指定的代理服务器
+        }
+    } 
+}
+</code></pre></blockquote>
+<p>配置文件编辑结束后，启动nginx服务</p>
+<blockquote>
+<p>service  nginx  start</p>
+</blockquote>
+<h4 id="（1）、轮询负载均衡（默认）"><a href="#（1）、轮询负载均衡（默认）" class="headerlink" title="（1）、轮询负载均衡（默认）"></a>（1）、轮询负载均衡（默认）</h4><pre><code> - 对应用程序服务器的请求以循环方式分发
+</code></pre><h4 id="（2）、加权负载均衡"><a href="#（2）、加权负载均衡" class="headerlink" title="（2）、加权负载均衡"></a>（2）、加权负载均衡</h4><blockquote>
+<p>通过使用服务器权重，还可以进一步影响nginx负载均衡算法，</p>
+<p>谁的权重越大，分发到的请求就越多。</p>
+<p>权重总数：10</p>
+</blockquote>
+<p>在nginx.conf文件中修改：</p>
+<pre><code> upstream shsxt {
+        server srv1.example.com weight=3;
+        server srv2.example.com;
+        server srv3.example.com;
+  }
+</code></pre><p>配置修改之后，重启</p>
+<blockquote>
+<p>service  nginx  restart</p>
+</blockquote>
+<h4 id="（3）、最少连接负载平衡"><a href="#（3）、最少连接负载平衡" class="headerlink" title="（3）、最少连接负载平衡"></a>（3）、最少连接负载平衡</h4><blockquote>
+<p>在连接负载最少的情况下，nginx会尽量避免将过多的请求分发给繁忙的应用程序服务器，</p>
+<p>而是将新请求分发给不太繁忙的服务器，避免服务器过载。</p>
+</blockquote>
+<p>在nginx.conf文件中修改：</p>
+<pre><code>upstream shsxt {
+        least_conn;
+        server srv1.example.com;
+        server srv2.example.com;
+        server srv3.example.com;
+    }
+</code></pre><h4 id="（4）、会话持久性——ip-hash负载平衡机制"><a href="#（4）、会话持久性——ip-hash负载平衡机制" class="headerlink" title="（4）、会话持久性——ip-hash负载平衡机制"></a>（4）、会话持久性——ip-hash负载平衡机制</h4><p><code>特点</code>：保证相同的客户端总是定向到相同的服务;</p>
+<p>(此方法可确保来自同一客户端的请求将始终定向到同一台服务器，除非此服务器不可用。)</p>
+<p>在nginx.conf文件中修改：</p>
+<pre><code>upstream shsxt{
+    ip_hash;
+    server （IP地址|别名）;
+    server （IP地址|别名）;
+    server （IP地址|别名）;
+}
+</code></pre><h4 id="5-、Nginx的访问控制"><a href="#5-、Nginx的访问控制" class="headerlink" title="(5)、Nginx的访问控制"></a>(5)、Nginx的访问控制</h4><blockquote>
+<p>Nginx还可以对IP的访问进行控制，allow代表允许，deny代表禁止.</p>
+</blockquote>
+<pre><code>location / {
+deny 192.168.2.180;
+allow 192.168.78.0/24;
+allow 10.1.1.0/16;
+allow 192.168.1.0/32;
+deny all;
+proxy_pass http://shsxt;
+}
+</code></pre><pre><code>从上到下的顺序，匹配到了便跳出。
+如上的例子先禁止了1个，
+接下来允许了3个网段，
+其中包含了一个ipv6，
+最后未匹配的IP全部禁止访问
 </code></pre>
             </div>
             <hr>
@@ -530,7 +776,7 @@
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="www.fancytan77.work" class="b-link-green">Fancy</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/01/19/单例模式/" class="b-link-green"></a>
+                    <a href="/2019/01/28/Nginx入门学习（第一回合）/" class="b-link-green"></a>
                 </p>
             </div>
         </div>
@@ -552,7 +798,7 @@
         repo: '',
         owner: '',
         admin: null,
-        id: '2019-01-19T08-36-14',
+        id: '2019-01-28T19-20-33',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -571,7 +817,7 @@
 <script src="/libs/gitment/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-    id: 'Sat Jan 19 2019 08:36:14 GMT+0800',
+    id: 'Mon Jan 28 2019 19:20:33 GMT+0800',
     owner: '',
     repo: '',
     oauth: {
@@ -595,8 +841,8 @@ gitment.render('gitment-content');
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'www.fancytan77.work/2019/01/19/单例模式/';
-        this.page.identifier = '/2019/01/19/单例模式/';
+        this.page.url = 'www.fancytan77.work/2019/01/28/Nginx入门学习（第一回合）/';
+        this.page.identifier = '/2019/01/28/Nginx入门学习（第一回合）/';
         this.page.title = '';
     };
     let disqus_shortname = '';
@@ -904,7 +1150,7 @@ gitment.render('gitment-content');
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">本篇</div>
             <div class="card">
-                <a href="/2019/01/19/单例模式/">
+                <a href="/2019/01/28/Nginx入门学习（第一回合）/">
                     <div class="card-image">
                         
                         
@@ -914,18 +1160,15 @@ gitment.render('gitment-content');
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">单例设计模式饿汉式:一个类只能创建一个对象
-
-私有化构造器
-在类的内部创建一个类的实例,且为static
-私有化对象,通过公共方法调用
-此公共方法只能通过类来调用,因为设置的是static,同时类的实例也是static
-
-饿汉先创建好:
- </div>
+                    <div class="summary">Nginx入门学习（第一回合）[^开发者]:  由俄罗斯的程序设计师Igor Sysoev所开发
+[TOC]
+一、产生背景1.巨大流量—海量的并发访问
+2.单台服务器资源和能力有限
+引发服务器宕机而无法提供服务
+二、负载均衡(Load Ba</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-19
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-28
                             </span>
                         <span class="publish-author">
                             
@@ -944,43 +1187,35 @@ gitment.render('gitment-content');
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">下一篇</div>
             <div class="card">
-                <a href="/2019/01/16/关于Spring中bean的作用域问题/">
+                <a href="/2019/01/28/Linux 入门学习（第二回合）/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="Spring中bean的作用域">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">Spring中bean的作用域</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary"># 
-一、bean的四种作用域Spring定义了多种作用域，可以基于这些作用域创建bean，包括:
-单例（Singleton）：在整个应用中，只创建bean的一个实例。
-原型（Prototype）：每次注入或者通过Spring应用上下文获取</div>
+                    <div class="summary">Linux 入门学习（第二回合）2018年12月18日  周二  晴
+今日学习要点：
+[TOC]
+Linux后半程一、Linux系统配置1.主机名配置：
+vim  /etc/sysconfig/network
+
+
+配置完成之后需要重启机器才</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-16
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-28
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/HelloWorld/" class="post-category" target="_blank">
-                                    HelloWorld
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            fancy tan77
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/spring/" target="_blank">
-                        <span class="chip bg-color">spring</span>
-                    </a>
-                    
                 </div>
                 
             </div>

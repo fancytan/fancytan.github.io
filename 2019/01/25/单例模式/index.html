@@ -5,11 +5,16 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Spring中bean的作用域, Fancy">
+    <meta name="keywords" content="单例设计模式, Fancy">
     <meta name="description" content="# 
-一、bean的四种作用域Spring定义了多种作用域，可以基于这些作用域创建bean，包括:
-单例（Singleton）：在整个应用中，只创建bean的一个实例。
-原型（Prototype）：每次注入或者通过Spring应用上下文获取">
+单例设计模式饿汉式:一个类只能创建一个对象
+
+私有化构造器
+在类的内部创建一个类的实例,且为static
+私有化对象,通过公共方法调用
+此公共方法只能通过类来调用,因为设置的是static,同时类的实例也是static
+
+饿汉先创建好">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +22,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Spring中bean的作用域 | Fancy</title>
+    <title>单例设计模式 | Fancy</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -279,13 +284,13 @@
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/34.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Spring中bean的作用域
+                        单例设计模式
                     </div>
                 </div>
             </div>
@@ -325,7 +330,7 @@
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2019-01-16
+                    <i class="fa fa-clock-o fa-fw"></i>2019-01-25
                 </span>
 				
 				
@@ -338,46 +343,75 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p># </p>
-<h2 id="一、bean的四种作用域"><a href="#一、bean的四种作用域" class="headerlink" title="一、bean的四种作用域"></a>一、bean的四种作用域</h2><p>Spring定义了多种作用域，可以基于这些作用域创建bean，包括:</p>
-<pre><code>单例（Singleton）：在整个应用中，只创建bean的一个实例。
-原型（Prototype）：每次注入或者通过Spring应用上下文获取的时候，都会创建一个新的bean实例。
-会话（Session）：在Web应用中，为每个会话创建一个bean实例。
-请求（Rquest）：在Web应用中，为每个请求创建一个bean实例 
-</code></pre><p>在默认情况下， Spring应用上下文中所有bean都是作为以单例（singleton）的形式创建的。也就是说，不管给定的一个bean被注入到其他bean多少次，每次所注入的都是同一个实例。在大多数情况下，单例bean是很理想的方案。但是在某些情况下，你所使用的类是易变的（mutable），它们会保持一些状态，因此重用是不安全的。在这种情况下，将class声明为单例的bean就不是什么好主意了。</p>
-<h2 id="二、使用其他作用域的bean"><a href="#二、使用其他作用域的bean" class="headerlink" title="二、使用其他作用域的bean"></a>二、使用其他作用域的bean</h2><p>要声明bean为其他作用域，可以使用@Scope注解，以下是用过@Scope注解和@Component注解一起使用，声明了一个原型作用域的bean：</p>
-<pre><code>@Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Notepad{...}
-</code></pre><p>这里，使用ConfigurableBeanFactory类的<code>SCOPE_PROTOTYPE</code>常量设置了原型作用域。你当然也可以使用@Scope(“prototype”)，但是使用<code>SCOPE_PROTOTYPE</code>常量更加安全并且不易出错。</p>
-<p>同样，@Scope注解也可以和@Bean注解一起使用:</p>
-<pre><code>@Bean
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public Notepad notepad(){
-    return new Notepad();
-}
-</code></pre><p>同样，可以使用scope属性通过XML的方式配置其他作用域的bean:</p>
-<pre><code>&lt;bean id=&quot;notepad&quot; class=&quot;com.carleviets.Notepad&quot; scope=&quot;prototype&quot;/&gt;
-</code></pre><h2 id="三、使用会话和请求作用域"><a href="#三、使用会话和请求作用域" class="headerlink" title="三、使用会话和请求作用域"></a>三、使用会话和请求作用域</h2><p>在典型的电子商务应用中，可能会有一个bean代表用户的购物车。如果购物车是单例的话，那么将会导致所有的用户都会向同一个购物车中添加商品。另一方面，如果购物车是原型作用域的，那么在应用中某一个地方往购物车中添加商品，在应用的另外一个地方可能就不可用了。就购物车bean来说，会话作用域是最为合适的，因为它与给定的用户关联性最大。</p>
-<pre><code>@Component
-@Scope(value=WebApplicationContext.SCOPE_SESSION, proxyMode=ScopedProxyMode.INTERFACES)
-public class ShoppingCart{...}
-</code></pre><p>注意,@Scope同时还有一个proxyMode属性，它被设置成了ScopedProxyMode.INTERFACES。这个属性解决了将会话或请求作用域的bean注入到单例bean中所遇到的问题。例如，如下的StoreService bean表示在线商店提供的服务:</p>
-<pre><code>@Component
-public class StoreService{
-    private ShoppingCart shoppingCart;
+<h3 id="单例设计模式"><a href="#单例设计模式" class="headerlink" title="单例设计模式"></a>单例设计模式</h3><h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><p>:一个类只能创建一个对象</p>
+<ol>
+<li>私有化构造器</li>
+<li>在类的内部创建一个类的实例,且为static</li>
+<li>私有化对象,通过公共方法调用</li>
+<li>此公共方法只能通过类来调用,因为设置的是static,同时类的实例也是static</li>
+</ol>
+<p>饿汉先创建好:</p>
+<pre><code>    package bank;
 
-    @Autowired
-    public void setShoppingCart(ShoppingCart shoppingCart){
-        this.shoppingCart=shoppingCart;
+    public class TestSingleton {
+        public static void main (String[] args){
+                Singleton s1 = Singleton.getInstance();
+                Singleton s2 = Singleton.getInstance();
+                System.out.println(s1 == s2); //true
+
+        }
     }
-    ...
-}
-</code></pre><p>因为StoreService是一个单例的bean，会在Spring应用上下文加载的时候创建。当它创建的时候， Spring会试图将ShoppingCart bean注入到setShoppingCart()方法中。但是ShoppingCart bean是会话作用域的，此时并不存在。直到某个用户进入系统，创建了会话之后，才会出现ShoppingCart实例。</p>
-<p>如果使用了proxyMode=ScopedProxyMode.INTERFACES的话，Spring并不会将实际的ShoppingCart bean注入到StoreService中，而是会注入一个到ShoppingCart bean的代理，如图所示。这个代理会暴露与ShoppingCart相同的方法，所以StoreService会认为它就是一个购物车。但是，当StoreService调用ShoppingCart的方法时，代理会对其进行懒解析并将调用委托给会话作用域内真正的ShoppingCart bean。</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1fz6igknkjlj30r00dy78f.jpg" alt="avatar"></p>
-<p>这是使用的是Spring基于接口的代理，但如果ShoppingCart是一个具体的类的话，Spring就没有办法创建基于接口的代理了。此时，它必须使用CGLib来生成基于类的代理。所以，如果bean类型是具体类的话，我们必须要将proxyMode属性设置为ScopedProxyMode.TARGET_CLASS，以此来表明要以生成目标类扩展的方式创建代理。</p>
-<p>尽管这里主要关注了会话作用域，但是请求作用域的bean会面临相同的装配问题。因此，请求作用域的bean应该也以作用域代理的方式进行注入。</p>
 
+    class Singleton{
+        //1.私有化构造器
+        private Singleton(){
+        }
+        //2.在类中创建一个类的实例,私有化,静态的
+        private static Singleton instance = new Singleton();
+        // 3.通过公共方法调用,此公共方法只能类调用,因为设置了 static
+        public static Singleton getInstance(){
+            return instance;
+        }
+    }
+</code></pre><h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><ol>
+<li>私有化构造器</li>
+<li>创建一个私有的实例static 先不实例化 为 null</li>
+<li><p>通过公共方法调用 static 在方法里面进行判断,if = null<br>实例化 !=null 直接return</p>
+<pre><code>class Singleton{
+        //1.私有化构造器
+        private Singleton(){}
+        //2.创建一个私有的实例为static 且值设置为null
+    private static Singleton instance = null;
+        //3.通过公共方法调用,static
+    public static Singleton getInstance(){
+        if (instance == null){
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+</code></pre></li>
+</ol>
+<p>懒汉式:用的时候创建</p>
+<p>懒汉式:可能出现线程安全问题,</p>
+<pre><code>public class SingleDemo {
+    private static SingleDemo s = null;
+    private SingleDemo(){}
+    public static  SingleDemo getInstance(){
+        /*如果第一个线程获取到了单例的实例对象，
+         * 后面的线程再获取实例的时候不需要进入同步代码块中了*/
+        if(s == null){
+            //同步代码块用的锁是单例的字节码文件对象，且只能用这个锁
+            synchronized(SingleDemo.class){
+                if(s == null){
+                    s = new SingleDemo();
+                }
+            }
+        }
+        return s;
+    }
+}
+</code></pre>
             </div>
             <hr>
 
@@ -515,7 +549,7 @@ public class StoreService{
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="www.fancytan77.work" class="b-link-green">Fancy</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/01/16/关于Spring中bean的作用域问题/" class="b-link-green">Spring中bean的作用域</a>
+                    <a href="/2019/01/25/单例模式/" class="b-link-green">单例设计模式</a>
                 </p>
             </div>
         </div>
@@ -537,7 +571,7 @@ public class StoreService{
         repo: '',
         owner: '',
         admin: null,
-        id: '2019-01-16T14-40-00',
+        id: '2019-01-25T11-40-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -556,7 +590,7 @@ public class StoreService{
 <script src="/libs/gitment/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-    id: 'Wed Jan 16 2019 14:40:00 GMT+0800',
+    id: 'Fri Jan 25 2019 11:40:00 GMT+0800',
     owner: '',
     repo: '',
     oauth: {
@@ -580,9 +614,9 @@ gitment.render('gitment-content');
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'www.fancytan77.work/2019/01/16/关于Spring中bean的作用域问题/';
-        this.page.identifier = '/2019/01/16/关于Spring中bean的作用域问题/';
-        this.page.title = 'Spring中bean的作用域';
+        this.page.url = 'www.fancytan77.work/2019/01/25/单例模式/';
+        this.page.identifier = '/2019/01/25/单例模式/';
+        this.page.title = '单例设计模式';
     };
     let disqus_shortname = '';
 
@@ -889,48 +923,35 @@ gitment.render('gitment-content');
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
-                <a href="/2019/01/25/单例模式/">
+                <a href="/2019/01/28/Linux 入门学习（第二回合）/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/34.jpg" class="responsive-img" alt="单例设计模式">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">单例设计模式</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary"># 
-单例设计模式饿汉式:一个类只能创建一个对象
+                    <div class="summary">Linux 入门学习（第二回合）2018年12月18日  周二  晴
+今日学习要点：
+[TOC]
+Linux后半程一、Linux系统配置1.主机名配置：
+vim  /etc/sysconfig/network
 
-私有化构造器
-在类的内部创建一个类的实例,且为static
-私有化对象,通过公共方法调用
-此公共方法只能通过类来调用,因为设置的是static,同时类的实例也是static
 
-饿汉先创建好</div>
+配置完成之后需要重启机器才</div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-25
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-28
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/HelloWorld/" class="post-category" target="_blank">
-                                    HelloWorld
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            fancy tan77
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/spring/" target="_blank">
-                        <span class="chip bg-color">spring</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -940,20 +961,23 @@ gitment.render('gitment-content');
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">下一篇</div>
             <div class="card">
-                <a href="/2018/09/07/hello-world/">
+                <a href="/2019/01/16/关于Spring中bean的作用域问题/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/30.jpg" class="responsive-img" alt="typora-vue-theme Theme introduction">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="Spring中bean的作用域">
                         
-                        <span class="card-title">typora-vue-theme Theme introduction</span>
+                        <span class="card-title">Spring中bean的作用域</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex</div>
+                    <div class="summary"># 
+一、bean的四种作用域Spring定义了多种作用域，可以基于这些作用域创建bean，包括:
+单例（Singleton）：在整个应用中，只创建bean的一个实例。
+原型（Prototype）：每次注入或者通过Spring应用上下文获取</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-09-07
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-01-16
                             </span>
                         <span class="publish-author">
                             
@@ -969,10 +993,6 @@ gitment.render('gitment-content');
                 </div>
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/java/" target="_blank">
-                        <span class="chip bg-color">java</span>
-                    </a>
                     
                     <a href="/tags/spring/" target="_blank">
                         <span class="chip bg-color">spring</span>
